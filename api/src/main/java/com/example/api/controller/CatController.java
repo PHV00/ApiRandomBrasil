@@ -31,7 +31,7 @@ public class CatController{
     @GetMapping("/{name}")
     public ResponseEntity<List<Cat>> getACat(@PathVariable String  name){
         Optional<Cat> cat = cats.stream().filter(c -> c.getName().equals(name).findFirst());
-        if(cats.isPresent()){
+        if(cat.isPresent()){
             return new ResponseEntity<>(cat.get(),httpStatus.OK);
         }
         return new ResponseEntity<>(cats,httpStatus.NOT_FOUND);
