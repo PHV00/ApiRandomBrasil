@@ -1,8 +1,6 @@
 package com.example.api.classes;
 
 public interface APIFunctions {
-    Object getRandomValue();
-    Object getRandomValueByFirstLetter(String firstLetter);
-    Object getRandomValueByGender(boolean gender);
-    Object getRandomListConcatValue(int listSize);
+    public abstract Object getRandomValue();
+    public abstract Object getRandomValueByFirstLetter(String firstLetter);
 }

@@ -30,13 +30,16 @@ public class Controller {
         DataBases.getInstance();
     }
 
-    // @GetMapping("/")
-    // public ResponseEntity<String> getRandomName(){
-    //     System.out.println("((((((((((((((((((((((((((((((((((()))))))))))))))))))))))))))))))))))");
-    //     System.out.println(DataBases.getDbNames().get(1).getWord());
-
-    //     return new ResponseEntity<>("ok",HttpStatus.OK);
-    // }
+    @GetMapping("/")
+    public ResponseEntity<String> getApiRoot(){
+        String welcome = 
+        "Olá bem vindo a api :)"
+        +"\n Experimente digitar:"
+        +"\n /nome"
+        +"\n /sobrenome"
+        +"\n /nome-completo";
+        return new ResponseEntity<>(welcome,HttpStatus.OK);
+    }
 
     @GetMapping("/nome")
     public ResponseEntity<String> getRandomName(){
@@ -44,29 +47,40 @@ public class Controller {
         return new ResponseEntity<>(selectName.getRandomValue().getValue(),HttpStatus.OK);
     }
     
-    // @GetMapping("/sobrenome")
-    // public ResponseEntity<String> getRandomSurname(){
-    //     Surname selectSurname = Surname.randomSurname();
-    //     return new ResponseEntity<>(selectSurname.getWord(),HttpStatus.OK);
-    // }
+    @GetMapping("/nome/{firstLetter}")
+    public ResponseEntity<String> getRandomNameByFirstLetter(@PathVariable String  firstLetter){
+        Name selectName = new Name(0,"",0);
+        return new ResponseEntity<>(selectName.getRandomValueByFirstLetter(firstLetter).getValue(),HttpStatus.OK);
+    }
 
-    // @GetMapping("/nomecompleto")
-    // public ResponseEntity<String> getRandomCompleteName(){
-        
-    //     return new ResponseEntity<>(selectSurname.getWord(),HttpStatus.OK);
-    // }
+    
+    @GetMapping("/nome/genero/{gender}")
+    public ResponseEntity<String> getRandomNameByGender(@PathVariable String gender){
+        Name selectName = new Name(0,"",0);
+        Name response;
 
-    // @GetMapping("/nome/{firstLetter}")
-    // public ResponseEntity<List<Name>> getACat(@PathVariable String  firstLetter){
-    //     Optional<Name> namesWithALetter = dbSurnames.stream().filter(name -> name.getSurname().equals(name));
+        if (gender.toUpperCase().equals("MASCULINO")){
+            response = selectName.getRandomValueByGender(true);
+            return new ResponseEntity<>(response.getValue(),HttpStatus.OK);
+        }
+        if(gender.toUpperCase().equals("FEMININO")){
+            response = selectName.getRandomValueByGender(false);
+            return new ResponseEntity<>(response.getValue(),HttpStatus.OK);
+        }
 
-    //     System.out.println("****************");
-    //     System.out.println(namesWithALetter);
-        
-    //     if(namesWithALetter.isPresent()){
-    //         return new ResponseEntity<>(namesWithALetter.get(),HttpStatus.OK);
-    //     }
-    //     return new ResponseEntity<>(namesWithALetter,HttpStatus.NOT_FOUND);
-    // }
+        return new ResponseEntity<>("ERROR URL CONTEM GENERO INVALIDO",HttpStatus.OK);
+    }
+    
+    @GetMapping("/sobrenome")
+    public ResponseEntity<String> getRandomSurname(){
+        Surname selectSurname = new Surname(0,"");
+        return new ResponseEntity<>(selectSurname.getRandomValue().getValue(),HttpStatus.OK);
+    }
+
+    @GetMapping("/sobrenome/{firstLetter}")
+    public ResponseEntity<String> getRandomSurnameByFirstLetter(@PathVariable String  firstLetter){
+        Surname selectSurname = new Surname(0,"");
+        return new ResponseEntity<>(selectSurname.getRandomValueByFirstLetter(firstLetter).getValue(),HttpStatus.OK);
+    }
 
 }

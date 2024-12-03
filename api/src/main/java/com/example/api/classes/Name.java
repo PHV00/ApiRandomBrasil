@@ -4,13 +4,13 @@ import java.util.Random;
 
 import lombok.Getter;
 import lombok.Setter;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Name extends ResponseValue {
+public class Name extends ResponseValue implements APIFunctions {
     @Getter
     @Setter
     private int id;
-    // 1 = Masculino
-    // 2 = Feminino
     @Getter
     @Setter
     private boolean gender;
@@ -31,19 +31,34 @@ public class Name extends ResponseValue {
     
     @Override
     public Name getRandomValueByFirstLetter(String firstLetter){
-        Name name = new Name(1,"",1);
-        return name;
+        List<Name> namesWithFirstLetter = new ArrayList<>();
+
+        for(Name name :DataBases.getDbNames()){
+            if(name.value.charAt(0) == firstLetter.toUpperCase().charAt(0)){
+                namesWithFirstLetter.add(name);
+            }
+        }
+
+        Random random = new Random();
+        int randomIdName = random.nextInt(namesWithFirstLetter.size());
+        Name selectName=  namesWithFirstLetter.get(randomIdName);
+        
+        return selectName;
     }
     
-    @Override
     public Name getRandomValueByGender(boolean gender){
-        Name name = new Name(1,"",1);
-        return name;
-    }
-    
-    @Override
-    public Name getRandomListConcatValue(int listSize){
-        Name name = new Name(1,"",1);
-        return name;
+        List<Name> namesWithGender = new ArrayList<>();
+
+        for(Name name :  DataBases.getDbNames()){
+            if(name.gender == gender){
+                namesWithGender.add(name);
+            }
+        }
+
+        Random random = new Random();
+        int randomIdName = random.nextInt(namesWithGender.size());
+        Name selectName=  namesWithGender.get(randomIdName);
+
+        return selectName;
     }
 }

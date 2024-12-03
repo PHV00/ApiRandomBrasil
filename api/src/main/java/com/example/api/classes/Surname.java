@@ -4,8 +4,10 @@ import java.util.Random;
 
 import lombok.Getter;
 import lombok.Setter;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Surname extends ResponseValue{
+public class Surname extends ResponseValue implements APIFunctions{
     @Getter
     @Setter
     private int id;
@@ -25,19 +27,18 @@ public class Surname extends ResponseValue{
 
     @Override
     public Surname getRandomValueByFirstLetter(String firstLetter){
-        Surname name = new Surname(1,"");
-        return name;
-    }
-    
-    @Override
-    public Surname getRandomValueByGender(boolean gender){
-        Surname name = new Surname(1,"");
-        return name;
-    }
-    
-    @Override
-    public Surname getRandomListConcatValue(int listSize){
-        Surname name = new Surname(1,"");
-        return name;
+        List<Surname> surnameWithFirstLetter = new ArrayList<>();
+
+        for(Surname surname :DataBases.getDbSurnames()){
+            if(surname.value.charAt(0) == firstLetter.toUpperCase().charAt(0)){
+                surnameWithFirstLetter.add(surname);
+            }
+        }
+
+        Random random = new Random();
+        int randomIdSurname = random.nextInt(surnameWithFirstLetter.size());
+        Surname selectSurname=  surnameWithFirstLetter.get(randomIdSurname);
+        
+        return selectSurname;
     }
 }

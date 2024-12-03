@@ -5,7 +5,7 @@
 // import lombok.Getter;
 // import lombok.Setter;
 
-// public class CompleteName {
+// public class CompleteName extends Responsevalue {
 //     @Getter
 //     @Setter
 //     private Name name;

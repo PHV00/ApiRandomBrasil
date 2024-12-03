@@ -11,9 +11,4 @@ public abstract class ResponseValue {
     public ResponseValue(String value){
         this.value = value;
     }
-
-    protected abstract Object getRandomValue();
-    protected abstract Object getRandomValueByFirstLetter(String firstLetter);
-    protected abstract Object getRandomValueByGender(boolean gender);
-    protected abstract Object getRandomListConcatValue(int listSize);
 }
